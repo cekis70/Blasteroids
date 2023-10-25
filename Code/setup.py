@@ -36,7 +36,10 @@ class Laser(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image = pygame.image.load("C:\Repos\Blasteroids\Graphics\laser.png").convert_alpha()
         self.rect = self.image.get_rect(midbottom = pos)
+        self.pos = pygame.math.Vector2(self.rect.topleft)
 
+    def update(self):
+        self.rect.y -= 1
 
 pygame.init()
 WINDOW_WIDTH, WINDOW_HEIGHT  = 1280, 720
@@ -48,7 +51,7 @@ background_surface = pygame.image.load("C:\Repos\Blasteroids\Graphics\\backgroun
 spaceship_group = pygame.sprite.Group()
 laser_group = pygame.sprite.Group()
 ship = Ship(spaceship_group)
-laser = Laser(laser_group, (200, 200))
+laser = Laser(laser_group, (600, 700))
 
 while True:
     for event in pygame.event.get():
@@ -59,8 +62,8 @@ while True:
     dt = clock.tick() / 1000
     display_surface.blit(background_surface,(0,0))
     spaceship_group.update()
+    laser_group.update()
     spaceship_group.draw(display_surface)
     laser_group.draw(display_surface)
     
     pygame.display.update()
-
